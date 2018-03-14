@@ -1,20 +1,41 @@
 # Observables in Angular
 
-Angular makes use of observables as an interface to handle a variety of common asynchronous operations. For example:
+Angular makes use of observables as an interface to handle a variety of common asynchronous operations. 
+
+Angular는 다양한 공통적인 비동기 operations를 다루기 interface 로써 observables을 사용하게 하게 한다.
+
+For example:
+
+예시:
 
 * The `EventEmitter` class extends `Observable`.
+* `EventEmitter` class 느 `Observable`를 상속 받았다.
+
+
 * The HTTP module uses observables to handle AJAX requests and responses.
+* HTTP module은  AJAX 요청 , 응답을 핸들링하는 observables 을 사용한다.
+
+
 * The Router and Forms modules use observables to listen for and respond to user-input events.
+* Router,Forms modules은 사용자-입력 이벤트에 응답하거나 리스닝하기 위해서  observables 을 사용한다.
+
 
 ## Event emitter
 
 Angular provides an `EventEmitter` class that is used when publishing values from a component through the `@Output()` decorator. `EventEmitter` extends `Observable`, adding an `emit()` method so it can send arbitrary values. When you call `emit()`, it passes the emitted value to the `next()` method of any subscribed observer.
 
+
+Angular는 `@Output()` 데코레이터를 통해서 컴포넌트로 값을 발행할때 사용하는 `EventEmitter` class 사용한다. `EventEmitter`는 `Observable`를 상속하고, 임의로 값을 보낼수 있게 하도록 `emit()`를 추가하였다. `emit()` 를 호출할때, 어떤 구독된 observer에게 `next()` method로 배출되는 값을 넘겨준다.
+
+
 A good example of usage can be found on the [EventEmitter](https://angular.io/api/core/EventEmitter) documentation. Here is the example component that listens for open and close events:
+
+사용에 대한 좋은 예시는 문서[EventEmitter](https://angular.io/api/core/EventEmitter)에서 찾을수있다. 여기에서는  열림/닫힘 이벤드에 대한 리스닝을 하는 컴포넌트 예시이다.
 
 `<zippy (open)="onOpen($event)" (close)="onClose($event)"></zippy>`
 
 Here is the component definition:
+이건 컴포넌 정의의 대한 예시이다:
 
 <code-example path="observables-in-angular/src/main.ts" title="EventEmitter" region="eventemitter"></code-example>
 
