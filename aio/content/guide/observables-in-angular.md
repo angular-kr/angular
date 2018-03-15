@@ -35,23 +35,36 @@ A good example of usage can be found on the [EventEmitter](https://angular.io/ap
 `<zippy (open)="onOpen($event)" (close)="onClose($event)"></zippy>`
 
 Here is the component definition:
-이건 컴포넌 정의의 대한 예시이다:
+이건 컴포넌트 정의의 대한 예시이다:
 
 <code-example path="observables-in-angular/src/main.ts" title="EventEmitter" region="eventemitter"></code-example>
 
 ## HTTP
 Angular’s `HttpClient` returns observables from HTTP method calls. For instance, `http.get(‘/api’)` returns an observable. This provides several advantages over promise-based HTTP APIs:
 
-* Observables do not mutate the server response (as can occur through chained `.then()` calls on promises). Instead, you can use a series of operators to transform values as needed.
-* HTTP requests are cancellable through the `unsubscribe()` method.
+앵귤러의 `HttpClient`는 HTTP method 호출에 대한 observables 리턴한다. 예를들면, 
+`http.get(‘/api’)`은 observable 리턴하낟. 이것은 몇몇 promise-기반 HTTP API에서 몇몇 이점을 제공한다.
+
+* Observables do not mutate the server response (as can occur through chained `.then()` calls on promises). Instead, you can use a series of operators to transform values as needed. Observables 
+* 서버 응답을 변형하지 않는다(promises에서  `.then()` 호출 체이닝을 통해서 발생하는것과 같이 ). 대신에, 필요시에 값을 변형하기 위해서 연속적인 operators 사용할수 있다.
+
+* HTTP requests are cancellable through the `unsubscribe()` method. 
+* HTTP 요청들은 `unsubscribe()` method 를 통해서 취소가 가능하다.
+
 * Requests can be configured to get progress event updates.
-* Failed requests can be retried easily.
+* 요청들은 이벤트 변경을 진행하기 위한 설정이 된다.
+
+* Failed requests can be retried easily. 실패된 요청은 쉽게 재개 될 수 있다.
 
 ## Async pipe
 
 The [AsyncPipe](https://angular.io/api/common/AsyncPipe) subscribes to an observable or promise and returns the latest value it has emitted. When a new value is emitted, the pipe marks the component to be checked for changes.
 
+The [AsyncPipe](https://angular.io/api/common/AsyncPipe) observable 또는 promise를 구독하고, 방출된 최종 값을 리턴한다. 새로운 값이 나올때마다, pipe는 컴포넌트의 변화를 확인하도록 표시한다.
+
 The following example binds the `time` observable to the component's view. The observable continuously updates the view with the current time.
+
+다음 예시는 컴포넌트의 view 에  `time` observable 과 연관된다. observable 지속적으로 현재 시작을 view에 변경한다.
 
 <code-example path="observables-in-angular/src/main.ts" title="Using async pipe" region="pipe"></code-example>
 
@@ -59,14 +72,23 @@ The following example binds the `time` observable to the component's view. The o
 
 [`Router.events`](https://angular.io/api/router/Router#events) provides events as observables. You can use the `filter()` operator from RxJS to look for events of interest, and subscribe to them in order to make decisions based on the sequence of events in the navigation process. Here's an example:
 
+
+[`Router.events`](https://angular.io/api/router/Router#events)는 observables로 이벤트를 공급한다. RxJs에서  `filter()` operator 를 이벤틔 상황을 관찰하기 위해서 사용할수 있고, navigation 과정의 연속적인 이벤트들에 근거하여 결정하기 위해서 observables을 구독한다. 
+
 <code-example path="observables-in-angular/src/main.ts" title="Router events" region="router"></code-example>
 
 The [ActivatedRoute](https://angular.io/api/router/ActivatedRoute) is an injected router service that makes use of observables to get information about a route path and parameters. For example, `ActivateRoute.url` contains an observable that reports the route path or paths. Here's an example:
+
+The [ActivatedRoute](https://angular.io/api/router/ActivatedRoute)는 a route path 그리고 parameters 대한 정보를 얻기 위한 observables 을 사용하는 주입된 router service이다.
+예를들면, `ActivateRoute.url`는 route path 와 paths를 보고하는 observable을 포함한다. 여기 그 예시다. 
+
 
 <code-example path="observables-in-angular/src/main.ts" title="ActivatedRoute" region="activated_route"></code-example>
 
 ## Reactive forms
 
 Reactive forms have properties that use observables to monitor form control values. The [`FormControl`](https://angular.io/api/forms/FormControl) properties `valueChanges` and `statusChanges` contain observables that raise change events. Subscribing to an observable form-control property is a way of triggering application logic within the component class. For example:
+
+Reactive forms은 form control values을 감사하는 observables을 properties으로 가지고 있다.[`FormControl`](https://angular.io/api/forms/FormControl) properties `valueChanges` 그리고 `statusChanges`는 변화 이벤튼 발생에 대한 observables 을 포함한다.form-control property 의 observable을 구독하는 것은 컴포넌트 calss 이내의 application logic을 동작시키는 방법이다.
 
 <code-example path="observables-in-angular/src/main.ts" title="Reactive forms" region="forms"></code-example>
