@@ -765,16 +765,25 @@ the `AfterContentComponent`'s parent. Here's the parent's template:
 <code-example path="lifecycle-hooks/src/app/after-content.component.ts" region="parent-template" title="AfterContentParentComponent (template excerpt)" linenums="false"></code-example>
 
 Notice that the `<my-child>` tag is tucked between the `<after-content>` tags.
-Never put content between a component's element tags *unless you intend to project that content
-into the component*.
+Never put content between a component's element tags *unless you intend to project that content into the component*.
+
+`<my-child>` tag는 `<after-content>` tag 의 사이에 갇혀 있음을 주목하라.
+컴포넌트로 컨테츠를 표시하는것을 의도하는 것 업신느 a component의 element tags 사이에 컨텐츠를 두지마라.
+
 
 Now look at the component's template:
+
+지금 컴포넌트의 템플릿을 보라:
+
 
 <code-example path="lifecycle-hooks/src/app/after-content.component.ts" region="template" title="AfterContentComponent (template)" linenums="false"></code-example>
 
 The `<ng-content>` tag is a *placeholder* for the external content.
 It tells Angular where to insert that content.
 In this case, the projected content is the `<my-child>` from the parent.
+`<ng-content>` tag 는 외부의 컨텐츠를 위한  *placeholder*이다.
+이것은 컨턴츠를 삽입할 영역을 앵귤러에 알려준다.
+이런 경우에, 표시된 컨턴트츠는 부모로부터  `<my-child>`이다.
 
 <figure>
   <img src='generated/images/guide/lifecycle-hooks/projected-child-view.png' alt="Projected Content">
@@ -783,9 +792,10 @@ In this case, the projected content is the `<my-child>` from the parent.
 <div class="l-sub-section">
 
   The telltale signs of *content projection* are twofold:
+  *content projection*의 숨길수 없는 표시들은 이중적이다.
 
-  * HTML between component element tags.
-  * The presence of `<ng-content>` tags in the component's template.
+  * HTML between component element tags.(컴포넌트 엘리멘트 태그 사이의 HTML)
+  * The presence of `<ng-content>` tags in the component's template.(컴포넌트 템플릿 안에 `<ng-content>` 의 존재)
 
 </div>
 
@@ -796,25 +806,48 @@ In this case, the projected content is the `<my-child>` from the parent.
 *AfterContent* hooks are similar to the *AfterView* hooks.
 The key difference is in the child component.
 
+*AfterContent* hooks은  *AfterView* hooks 와 비슷하다.
+핵심 차리점은 자식 컴포넌트에 있다.
+
 * The *AfterView* hooks concern `ViewChildren`, the child components whose element tags
 appear *within* the component's template.
 
+*AfterView* hooks은  컴포넌트의 템플릿 이내에서 나타나는 엘리멘트에 자식 컨포넌트 `ViewChildren`하고 연관된다.
+
 * The *AfterContent* hooks concern `ContentChildren`, the child components that Angular
 projected into the component.
+
+*AfterContent* hooks 앵귤러가 컴포넌트에서 나타나는 하는 자식 컴포넌트인 `ContentChildren`과 연관된다.
 
 The following *AfterContent* hooks take action based on changing values in a *content child*,
 which can only be reached by querying for them via the property decorated with
 [@ContentChild](api/core/ContentChild).
 
+
+여기에서는 *AfterContent* hooks 은  [@ContentChild](api/core/ContentChild)로 데코레이트 된 속성을 통해서 질의하여 결정되는 *content child*에 변경되는 값에 의해서 동작한다. 
+
 <code-example path="lifecycle-hooks/src/app/after-content.component.ts" region="hooks" title="AfterContentComponent (class excerpts)" linenums="false"></code-example>
 
 {@a no-unidirectional-flow-worries}
 
-### No unidirectional flow worries with _AfterContent_
+### No unidirectional flow worries with _AfterContent_(단방향의 흐름에서 _AfterContent_ 신경쓰지 않아도 된다. )
 
 This component's `doSomething()` method update's the component's data-bound `comment` property immediately.
 There's no [need to wait](guide/lifecycle-hooks#wait-a-tick).
 
+이 컴포넌트의 `doSomething()` method는 컴포넌트의 data-bound `comment` property을 즉시 변경한다.
+기다릴 필요가 없다.[need to wait](guide/lifecycle-hooks#wait-a-tick).
+
+
 Recall that Angular calls both *AfterContent* hooks before calling either of the *AfterView* hooks.
 Angular completes composition of the projected content *before* finishing the composition of this component's view.
 There is a small window between the `AfterContent...` and `AfterView...` hooks to modify the host view.
+
+Angular는 *AfterView* hooks을 호출하기전에 각각의 *AfterContent* hooks을 호출함을 기억하세요.
+Angular는 컴포넌트의 views의 조합이 완료되기 전에, 나타내는 컨턴츠의 조합을 완료한다. 
+the host view 를 수정하기 위해서 `AfterContent...` 그리고 `AfterView...` hooks 사이에 작은 창 있다.
+
+
+
+
+
